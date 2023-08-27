@@ -1,7 +1,8 @@
-import { getPokemon } from "@/lib/pokemonAPI"
+import { getPokemon, getPokemonEvolution } from "@/lib/pokemonAPI"
 import { PokemonImage } from "@/components/pokemon-image"
 import { Progress } from "@/components/ui/progress"
 import { PokemonType } from "@/components/poekomon-type"
+import { PokemonEvolution } from "@/components/pokemon-evolve"
 
 export default async function PokemonPage({
   params,
@@ -11,6 +12,7 @@ export default async function PokemonPage({
   const { pokemonName } = params
 
   const pokemonObject = await getPokemon(pokemonName)
+  const pokemonEvolution = await getPokemonEvolution(pokemonName)
 
   return (
     <>
@@ -25,8 +27,9 @@ export default async function PokemonPage({
 
       <div className="flex">
         {pokemonObject.types.map((type: any) => {
-          console.log(type)
-          return <PokemonType type={type.type.name} />
+          return (
+            <PokemonType type={type.type.name} key={type.type.name + "type"} />
+          )
         })}
       </div>
       <div
@@ -56,6 +59,7 @@ export default async function PokemonPage({
           )
         })}
       </div>
+      <PokemonEvolution chain={pokemonEvolution} />
     </>
   )
 }

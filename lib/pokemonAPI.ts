@@ -13,3 +13,13 @@ export async function getPokemon(name: string) {
 
   return data
 }
+
+export async function getPokemonEvolution(name: string) {
+  const response = await fetch(POKEMON_API + "pokemon-species/" + name)
+  const data = await response.json()
+
+  const evolutionResponse = await fetch(data.evolution_chain.url)
+  const evolutionData = await evolutionResponse.json()
+
+  return evolutionData.chain
+}
