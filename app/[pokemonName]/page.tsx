@@ -1,6 +1,7 @@
 import { getPokemon } from "@/lib/pokemonAPI"
 import { PokemonImage } from "@/components/pokemon-image"
 import { Progress } from "@/components/ui/progress"
+import { PokemonType } from "@/components/poekomon-type"
 
 export default async function PokemonPage({
   params,
@@ -13,9 +14,21 @@ export default async function PokemonPage({
 
   return (
     <>
-      <h1 className="text-4xl text-bold pt-4">
-        {pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
-      </h1>
+      <div className="flex-col justify-center items-center">
+        <h1 className="text-4xl text-bold pt-4">
+          {pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
+        </h1>
+        <h5 className="text-sm text-center mt-2">
+          Weight: {pokemonObject.weight}
+        </h5>
+      </div>
+
+      <div className="flex">
+        {pokemonObject.types.map((type: any) => {
+          console.log(type)
+          return <PokemonType type={type.type.name} />
+        })}
+      </div>
       <div
         className="m-4"
         style={{ position: "relative", width: "300px", height: "300px" }}
@@ -25,7 +38,6 @@ export default async function PokemonPage({
           name={pokemonName}
         />
       </div>
-      <h3>Weight: {pokemonObject.weight}</h3>
       <div className="flex-col">
         {pokemonObject.stats.map((statObject: any) => {
           const statName = statObject.stat.name
